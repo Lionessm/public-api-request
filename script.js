@@ -38,7 +38,6 @@ function createEmployeesMarkup(employee, i) {
 function addEventListenerToEmployee(i) {
     let container = document.getElementById(`employee_id_${i}`);
     container.addEventListener('click' , (e) => {
-        console.log("am intrat in modal employee");
         modalEmployee(i);
     })
 };
@@ -54,7 +53,7 @@ function modalEmployee(i) {
                         <p class="modal-text">${allEmployees[i]['email']}</p>
                         <p class="modal-text cap">${allEmployees[i]['location']['city']}</p>
                         <hr>
-                            <p class="modal-text">${allEmployees[i]['phone']}</p>
+                            <p class="modal-text">${formatPhoneNo(allEmployees[i]['phone'])}</p>
                             <p class="modal-text">${allEmployees[i]['location']['street']['number']}, ${allEmployees[i]['location']['street']['name']}, ${allEmployees[i]['location']['state']}, ${allEmployees[i]['location']['postcode']}, ${allEmployees[i]['location']['country']}</p>
                             <p class="modal-text">Birthday: ${allEmployees[i]['dob']['date']}</p>
                 </div>
@@ -66,13 +65,19 @@ function modalEmployee(i) {
     const exitButton = document.getElementById("modal-close-btn");
     exitButton.addEventListener('click' , (e) => {
 
-        console.log("T!")
-
         const myModalWindow = document.getElementsByClassName("modal-container")[0];
         body.removeChild(myModalWindow);
     })
 }
 
+function formatPhoneNo(phone) {
+    let cleaned = ('' + phone).replace(/\D/g, '')
+    let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
+    if (match) {
+        return '(' + match[1] + ') ' + match[2] + '-' + match[3]
+    }
+    return null;
+}
 
 
 
@@ -84,6 +89,5 @@ function modalEmployee(i) {
 // - Append the built html markup into the gallery div
 // - Add event listener for each markup on click
 // - On event highlight the profile that was selected
-
 // - Store in a global variable the employees list
 // - Create modal markup for emplyee
