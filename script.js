@@ -1,4 +1,5 @@
 
+// - Fetch 12 random users using randomuser.me api
 
 fetch('https://randomuser.me/api/?results=12')
     .then(res => res.json())
@@ -20,16 +21,24 @@ function createEmployeesMarkup(employee) {
             <img class="card-img" src="${employee['picture']['large']}" alt="profile picture">
         </div>
         <div class="card-info-container">
-            <h3 id="name" class="card-name cap">${employee['name']['title']} ${employee['name']['first']} ${employee['name']['last']}</h3>
+            <h3 id="name" class="card-name cap">${employee['name']['first']} ${employee['name']['last']}</h3>
             <p class="card-text">${employee['email']}</p>
-            <p class="card-text cap">${employee['location']['city']} ${employee['location']['country']}</p>
+            <p class="card-text cap">${employee['location']['city']}</p>
         </div>
     </div>`;
 
     const gallery = document.getElementById('gallery');
-    gallery.innerHTML += markup;
+    gallery.insertAdjacentHTML('beforeend', markup);
     return markup;
 }
+
+document.addEventListener('click',function(e){
+    console.log(e.target.className);
+    if(e.target && e.target.className === 'card'){
+        console.log("I work");
+    }
+})
+
 
 
 
@@ -38,3 +47,5 @@ function createEmployeesMarkup(employee) {
 // - Loop through the response data
 // - Build html markup for each user
 // - Append the built html markup into the gallery div
+// - Add event listener for each markup on click
+// - On event highlight the profile that was selected
