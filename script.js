@@ -55,7 +55,7 @@ function modalEmployee(i) {
                         <hr>
                             <p class="modal-text">${formatPhoneNo(allEmployees[i]['phone'])}</p>
                             <p class="modal-text">${allEmployees[i]['location']['street']['number']}, ${allEmployees[i]['location']['street']['name']}, ${allEmployees[i]['location']['state']}, ${allEmployees[i]['location']['postcode']}, ${allEmployees[i]['location']['country']}</p>
-                            <p class="modal-text">Birthday: ${allEmployees[i]['dob']['date']}</p>
+                            <p class="modal-text">Birthday: ${parseDate(allEmployees[i]['dob']['date'])}</p>
                 </div>
             </div>`
 
@@ -80,6 +80,18 @@ function formatPhoneNo(phone) {
 }
 
 
+function parseDate(dateString) {
+    let date = new Date(dateString);
+    let year = date.getFullYear();
+
+    let month = (1 + date.getMonth()).toString();
+    month = month.length > 1 ? month : '0' + month;
+
+    let day = date.getDate().toString();
+    day = day.length > 1 ? day : '0' + day;
+
+    return month + '/' + day + '/' + year;
+}
 
 
 // TODO 1:
