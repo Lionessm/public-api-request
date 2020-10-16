@@ -15,7 +15,6 @@ fetch('https://randomuser.me/api/?results=12')
         }
     })
 
-
 // Creates gallery containers for every employee and displays their image, name, email, city and country.
 // Appends this markup with insertAdjacentHTML.
 
@@ -104,5 +103,3 @@ function parseDate(dateString) {
 
     return month + '/' + day + '/' + year;
 }
-
-
