@@ -1,5 +1,6 @@
 let allEmployees;
-// - Fetch 12 random users using randomuser.me api
+
+// Fetch 12 random users using randomuser.me api and loop through the results.
 
 fetch('https://randomuser.me/api/?results=12')
     .then(res => res.json())
@@ -14,8 +15,9 @@ fetch('https://randomuser.me/api/?results=12')
         }
     })
 
+
 // Creates gallery containers for every employee and displays their image, name, email, city and country.
-// Appends this markup with innerHTML
+// Appends this markup with insertAdjacentHTML.
 
 function createEmployeesMarkup(employee, i) {
     const markup =
@@ -35,12 +37,18 @@ function createEmployeesMarkup(employee, i) {
 }
 
 
+// Adds event listener to employee container and on click calls the modalEmployee(i) function.
+
 function addEventListenerToEmployee(i) {
     let container = document.getElementById(`employee_id_${i}`);
     container.addEventListener('click' , (e) => {
         modalEmployee(i);
     })
 };
+
+// Creates markup for modal employee.
+// Appends markup to body with insertAdjacentHTML.
+// Adds event listener to the 'x' button that closes the modal window by removing myModalWindow element (removeChild).
 
 function modalEmployee(i) {
     let clickedEmployeeModalDisplay =
@@ -54,7 +62,7 @@ function modalEmployee(i) {
                         <p class="modal-text cap">${allEmployees[i]['location']['city']}</p>
                         <hr>
                             <p class="modal-text">${formatPhoneNo(allEmployees[i]['phone'])}</p>
-                            <p class="modal-text">${allEmployees[i]['location']['street']['number']}, ${allEmployees[i]['location']['street']['name']}, ${allEmployees[i]['location']['state']}, ${allEmployees[i]['location']['postcode']}, ${allEmployees[i]['location']['country']}</p>
+                            <p class="modal-text">${allEmployees[i]['location']['street']['number']} ${allEmployees[i]['location']['street']['name']}, ${allEmployees[i]['location']['state']}, ${allEmployees[i]['location']['postcode']}, ${allEmployees[i]['location']['country']}</p>
                             <p class="modal-text">Birthday: ${parseDate(allEmployees[i]['dob']['date'])}</p>
                 </div>
             </div>`
@@ -70,15 +78,19 @@ function modalEmployee(i) {
     })
 }
 
+
+// Formats phone numbers to be displayed as (XXX)-XXX-XXXX. If phone number is too long it does not display it.
+
 function formatPhoneNo(phone) {
-    let cleaned = ('' + phone).replace(/\D/g, '')
+    let cleaned = ('' + phone).replace(/\D/g, '');
     let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
     if (match) {
         return '(' + match[1] + ') ' + match[2] + '-' + match[3]
     }
-    return null;
+    return '';
 }
 
+// Parses date to be correct format: MM/DD/YYYY.
 
 function parseDate(dateString) {
     let date = new Date(dateString);
@@ -94,12 +106,3 @@ function parseDate(dateString) {
 }
 
 
-// TODO 1:
-// - Fetch 12 random users using randomuser.me api.
-// - Loop through the response data
-// - Build html markup for each user
-// - Append the built html markup into the gallery div
-// - Add event listener for each markup on click
-// - On event highlight the profile that was selected
-// - Store in a global variable the employees list
-// - Create modal markup for emplyee
